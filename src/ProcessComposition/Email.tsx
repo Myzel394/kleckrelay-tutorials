@@ -56,7 +56,7 @@ export default function Email() {
 			secondToFrame(13.8, fps),
 			secondToFrame(14.8, fps),
 		],
-		[0, 820, 820, 0, 0, 460, 460, 820],
+		[0, 850, 850, 0, 0, 460, 460, 850],
 		{
 			extrapolateLeft: 'clamp',
 			extrapolateRight: 'clamp',
