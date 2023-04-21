@@ -3,6 +3,9 @@ import YourEmail from './YourEmail';
 import GitHubService from './GitHubService';
 import Email from './Email';
 import Emoji from './Emoji';
+import Logo from './Logo';
+import LaserScreen from './LaserScreen';
+import Emoji2 from './Emoji2';
 
 export default function ProcessComposition() {
 	return (
@@ -13,6 +16,9 @@ export default function ProcessComposition() {
 			</div>
 			<Email />
 			<Emoji />
+			<Emoji2 />
+			<Logo />
+			<LaserScreen />
 		</AbsoluteFill>
 	);
 }

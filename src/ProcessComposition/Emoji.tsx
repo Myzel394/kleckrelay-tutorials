@@ -1,4 +1,10 @@
-import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {
+	Easing,
+	interpolate,
+	spring,
+	useCurrentFrame,
+	useVideoConfig,
+} from 'remotion';
 import secondToFrame from '../second-to-frame';
 import {HiEmojiSad} from 'react-icons/all';
 
@@ -13,10 +19,25 @@ export default function Emoji() {
 			damping: 10,
 		},
 	});
+	const scaleOut = interpolate(
+		frame,
+		[secondToFrame(9, fps), secondToFrame(9.2, fps)],
+		[1, 0],
+		{
+			extrapolateLeft: 'clamp',
+			extrapolateRight: 'clamp',
+			easing: Easing.out(Easing.cubic),
+		}
+	);
 	const opacity = interpolate(
 		frame,
-		[secondToFrame(7.5, fps), secondToFrame(8, fps)],
-		[0, 0.8],
+		[
+			secondToFrame(7.5, fps),
+			secondToFrame(8, fps),
+			secondToFrame(9, fps),
+			secondToFrame(9.2, fps),
+		],
+		[0, 0.8, 0.8, 0],
 		{
 			extrapolateLeft: 'clamp',
 			extrapolateRight: 'clamp',
@@ -34,7 +55,9 @@ export default function Emoji() {
 				color="#FFD166"
 				size={200}
 				style={{
-					transform: `scale(${scale})`,
+					transform: `scale(${
+						frame > secondToFrame(9, fps) ? scaleOut : scale
+					})`,
 				}}
 			/>
 		</div>

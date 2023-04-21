@@ -30,10 +30,33 @@ export default function Email() {
 			damping: 100,
 		},
 	});
+	const virus3Scale = spring({
+		fps,
+		frame: frame - secondToFrame(11, fps),
+		config: {
+			damping: 100,
+		},
+	});
+	const virus4Scale = spring({
+		fps,
+		frame: frame - secondToFrame(11.3, fps),
+		config: {
+			damping: 100,
+		},
+	});
 	const moveRight = interpolate(
 		frame,
-		[secondToFrame(5, fps), secondToFrame(6, fps)],
-		[0, 820],
+		[
+			secondToFrame(5, fps),
+			secondToFrame(6, fps),
+			secondToFrame(9, fps),
+			secondToFrame(10, fps),
+			secondToFrame(12, fps),
+			secondToFrame(13, fps),
+			secondToFrame(13.8, fps),
+			secondToFrame(14.8, fps),
+		],
+		[0, 820, 820, 0, 0, 460, 460, 820],
 		{
 			extrapolateLeft: 'clamp',
 			extrapolateRight: 'clamp',
@@ -60,6 +83,15 @@ export default function Email() {
 			easing: Easing.bezier(0.5, 0.25, 0.43, 0.97),
 		}
 	);
+	const virusOpacity = interpolate(
+		frame,
+		[secondToFrame(9, fps), secondToFrame(9.2, fps)],
+		[1, 0],
+		{
+			extrapolateLeft: 'clamp',
+			extrapolateRight: 'clamp',
+		}
+	);
 
 	return (
 		<div
@@ -76,7 +108,8 @@ export default function Email() {
 						transform: `scale(${mailScale})`,
 					}}
 				>
-					{frame > secondToFrame(6, fps) ? (
+					{(frame > secondToFrame(6, fps) && frame < secondToFrame(9, fps)) ||
+					frame > secondToFrame(14.8, fps) ? (
 						<HiMailOpen
 							size={48}
 							className="text-gray-400 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0"
@@ -93,6 +126,7 @@ export default function Email() {
 						size={24}
 						style={{
 							transform: `scale(${virus1Scale}) translateY(${virus1MoveProgress}px)`,
+							opacity: virusOpacity,
 						}}
 					/>
 				</div>
@@ -101,8 +135,29 @@ export default function Email() {
 						size={24}
 						style={{
 							transform: `scale(${virus2Scale}) translateY(${virus2MoveProgress}px)`,
+							opacity: virusOpacity,
 						}}
 					/>
+				</div>
+				<div className="text-red-500 z-10 absolute -left-7 -top-5">
+					{frame <= secondToFrame(13.05, fps) && (
+						<FaVirus
+							size={24}
+							style={{
+								transform: `scale(${virus3Scale})`,
+							}}
+						/>
+					)}
+				</div>
+				<div className="text-red-500 z-10 absolute left-2">
+					{frame <= secondToFrame(13.45, fps) && (
+						<FaVirus
+							size={24}
+							style={{
+								transform: `scale(${virus4Scale})`,
+							}}
+						/>
+					)}
 				</div>
 			</div>
 		</div>
